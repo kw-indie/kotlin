@@ -41616,11 +41616,6 @@ public class LightAnalysisModeTestGenerated extends AbstractLightAnalysisModeTes
         runTest("compiler/testData/codegen/box/reflection/enclosing/functionExpressionInProperty.kt");
       }
 
-      @TestMetadata("kt11969.kt")
-      public void testKt11969() {
-        runTest("compiler/testData/codegen/box/reflection/enclosing/kt11969.kt");
-      }
-
       @TestMetadata("kt45907.kt")
       public void testKt45907() {
         runTest("compiler/testData/codegen/box/reflection/enclosing/kt45907.kt");
