@@ -57,18 +57,14 @@ import java.io.File
 open class IncrementalFirJvmCompilerRunner(
     workingDir: File,
     reporter: BuildReporter<GradleBuildTime, GradleBuildPerformanceMetric>,
-    buildHistoryFile: File?,
     outputDirs: Collection<File>?,
-    modulesApiHistory: ModulesApiHistory,
     classpathChanges: ClasspathChanges,
     kotlinSourceFilesExtensions: Set<String> = DEFAULT_KOTLIN_SOURCE_FILES_EXTENSIONS,
     icFeatures: IncrementalCompilationFeatures = IncrementalCompilationFeatures.DEFAULT_CONFIGURATION,
 ) : IncrementalJvmCompilerRunner(
     workingDir,
     reporter,
-    buildHistoryFile,
     outputDirs,
-    modulesApiHistory,
     classpathChanges,
     kotlinSourceFilesExtensions,
     icFeatures,
@@ -307,7 +303,7 @@ open class IncrementalFirJvmCompilerRunner(
 }
 
 
-fun CompilerConfiguration.configureBaseRoots(args: K2JVMCompilerArguments) {
+private fun CompilerConfiguration.configureBaseRoots(args: K2JVMCompilerArguments) {
 
     var isJava9Module = false
     args.javaSourceRoots?.forEach {
@@ -331,7 +327,7 @@ fun CompilerConfiguration.configureBaseRoots(args: K2JVMCompilerArguments) {
     // TODO: modularJdkRoot (now seems only processed from the build file
 }
 
-fun CompilerConfiguration.configureSourceRootsFromSources(
+private fun CompilerConfiguration.configureSourceRootsFromSources(
     allSources: Collection<File>, commonSources: Set<File>, javaPackagePrefix: String?
 ) {
     val hmppCliModuleStructure = get(CommonConfigurationKeys.HMPP_MODULE_STRUCTURE)

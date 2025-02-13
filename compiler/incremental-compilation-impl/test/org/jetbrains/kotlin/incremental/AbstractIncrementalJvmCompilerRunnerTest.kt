@@ -23,6 +23,7 @@ import org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
 import org.jetbrains.kotlin.cli.common.messages.MessageCollectorImpl
 import org.jetbrains.kotlin.config.LanguageVersion
+import org.jetbrains.kotlin.incremental.impl.makeEmptyClasspathChangesForSingleModuleTests
 import org.jetbrains.kotlin.incremental.multiproject.EmptyModulesApiHistory
 import org.jetbrains.kotlin.incremental.utils.*
 import org.jetbrains.kotlin.test.util.KtTestUtil
@@ -81,10 +82,8 @@ abstract class AbstractIncrementalJvmCompilerRunnerTest : AbstractIncrementalCom
                     IncrementalFirJvmCompilerTestRunner(
                         cachesDir,
                         buildReporter,
-                        buildHistoryFile,
                         outputDirs = null,
-                        EmptyModulesApiHistory,
-                        ClasspathChanges.ClasspathSnapshotDisabled,
+                        makeEmptyClasspathChangesForSingleModuleTests(cachesDir),
                         kotlinExtensions,
                         testLookupTracker = testLookupTracker
                     )
@@ -97,7 +96,6 @@ abstract class AbstractIncrementalJvmCompilerRunnerTest : AbstractIncrementalCom
                         outputDirs = null,
                         modulesApiHistory = EmptyModulesApiHistory,
                         kotlinSourceFilesExtensions = kotlinExtensions,
-                        classpathChanges = ClasspathChanges.ClasspathSnapshotDisabled,
                         icFeatures = IncrementalCompilationFeatures(
                             withAbiSnapshot = false,
                             usePreciseJavaTracking = verifiedPreciseJavaTracking

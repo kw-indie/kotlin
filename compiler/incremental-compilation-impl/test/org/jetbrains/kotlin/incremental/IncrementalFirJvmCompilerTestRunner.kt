@@ -15,9 +15,7 @@ import java.io.File
 class IncrementalFirJvmCompilerTestRunner(
     workingDir: File,
     val testReporter: TestBuildReporter,
-    buildHistoryFile: File,
     outputDirs: Collection<File>?,
-    modulesApiHistory: ModulesApiHistory,
     classpathChanges: ClasspathChanges,
     kotlinSourceFilesExtensions: Set<String> = DEFAULT_KOTLIN_SOURCE_FILES_EXTENSIONS,
     icFeatures: IncrementalCompilationFeatures = IncrementalCompilationFeatures.DEFAULT_CONFIGURATION,
@@ -25,9 +23,7 @@ class IncrementalFirJvmCompilerTestRunner(
 ) : IncrementalFirJvmCompilerRunner(
     workingDir,
     testReporter,
-    buildHistoryFile,
     outputDirs,
-    modulesApiHistory,
     classpathChanges,
     kotlinSourceFilesExtensions,
     icFeatures,

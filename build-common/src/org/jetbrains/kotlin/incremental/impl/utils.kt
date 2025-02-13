@@ -5,10 +5,22 @@
 
 package org.jetbrains.kotlin.incremental.impl
 
+import org.jetbrains.kotlin.incremental.ClasspathChanges
+import org.jetbrains.kotlin.incremental.ClasspathChanges.ClasspathSnapshotEnabled.IncrementalRun.NoChanges
+import org.jetbrains.kotlin.incremental.ClasspathSnapshotFiles
 import org.jetbrains.kotlin.incremental.md5
+import java.io.File
 
 fun ByteArray.hashToLong(): Long {
     // Note: The returned type `Long` is 64-bit, but we currently don't have a good 64-bit hash function.
     // The method below uses `md5` which is 128-bit and converts it to `Long`.
     return md5()
+}
+
+fun makeEmptyClasspathChangesForSingleModuleTests(rootDirectory: File): ClasspathChanges {
+    val snapshotFiles = ClasspathSnapshotFiles(
+        currentClasspathEntrySnapshotFiles = emptyList(),
+        classpathSnapshotDir = rootDirectory.resolve("classpathSnapshotDir")
+    )
+    return NoChanges(snapshotFiles)
 }

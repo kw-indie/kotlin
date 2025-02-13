@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
 import org.jetbrains.kotlin.config.IncrementalCompilation
 import org.jetbrains.kotlin.config.LanguageVersion
+import org.jetbrains.kotlin.incremental.impl.makeEmptyClasspathChangesForSingleModuleTests
 import org.jetbrains.kotlin.incremental.multiproject.EmptyModulesApiHistory
 import java.io.File
 
@@ -78,23 +79,20 @@ fun makeJvmIncrementally(
                 IncrementalFirJvmCompilerRunner(
                     cachesDir,
                     buildReporter,
-                    buildHistoryFile,
                     outputDirs = null,
-                    EmptyModulesApiHistory,
-                    ClasspathChanges.ClasspathSnapshotDisabled,
+                    makeEmptyClasspathChangesForSingleModuleTests(cachesDir),
                     kotlinSourceFilesExtensions = kotlinExtensions,
                     icFeatures = IncrementalCompilationFeatures(
                         usePreciseJavaTracking = verifiedPreciseJavaTracking
                     ),
                 )
             } else {
-                IncrementalJvmCompilerRunner(
+                BuildHistoryJvmICRunner(
                     cachesDir,
                     buildReporter,
                     buildHistoryFile = buildHistoryFile,
                     outputDirs = null,
                     modulesApiHistory = EmptyModulesApiHistory,
-                    classpathChanges = ClasspathChanges.ClasspathSnapshotDisabled,
                     kotlinSourceFilesExtensions = kotlinExtensions,
                     icFeatures = IncrementalCompilationFeatures(
                         usePreciseJavaTracking = verifiedPreciseJavaTracking
