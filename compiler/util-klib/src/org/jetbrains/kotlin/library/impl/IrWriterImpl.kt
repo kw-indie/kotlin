@@ -25,7 +25,7 @@ class IrMonoliticWriterImpl(_irLayout: IrKotlinLibraryLayout) : IrWriterImpl(_ir
             IrArrayWriter(map { it.strings }).writeIntoFile(irLayout.irStrings.absolutePath)
             IrArrayWriter(map { it.bodies }).writeIntoFile(irLayout.irBodies.absolutePath)
             IrArrayWriter(mapNotNull { it.debugInfo }).writeIntoFile(irLayout.irDebugInfo.absolutePath)
-            val fileEntries = mapNotNull { it.fileEntries }
+            val fileEntries = map { it.fileEntries }
             if (fileEntries.any { it.isNotEmpty() }) {
                 IrArrayWriter(fileEntries).writeIntoFile(irLayout.irFileEntries.absolutePath)
             }
