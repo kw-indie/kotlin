@@ -724,7 +724,7 @@ open class FunctionInlining(
         }
 
         private fun ParameterToArgument.doesNotNeedTemporaryVariable(): Boolean =
-            argumentExpression.isPure(false, symbols = context.ir.symbols)
+            argumentExpression.isPure(false, symbols = context.symbols)
                     && (inlineFunctionResolver.inlineMode == InlineMode.ALL_FUNCTIONS || parameter.isInlineParameter())
 
         private fun ParameterToArgument.isLoadOfInlineParameter(): Boolean {
