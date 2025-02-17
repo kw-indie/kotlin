@@ -511,7 +511,7 @@ private class CallInlining(
                     outerClassThis.type,
                     IrGetValueImpl(UNDEFINED_OFFSET, UNDEFINED_OFFSET, currentThisSymbol)
                 ),
-                isDefaultArg = true // this needs to be computed inside, when variable for dispatch receiver is already created.
+                isDefaultArg = true // corresponding temporary variable must be created inside inlined block, when variable for dispatch receiver is already created.
             )
 
             allParametersReplacements.add(parameterToArgument)
