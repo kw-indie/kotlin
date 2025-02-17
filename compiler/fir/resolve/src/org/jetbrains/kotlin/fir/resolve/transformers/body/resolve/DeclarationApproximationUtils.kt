@@ -12,19 +12,17 @@ import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.types.TypeApproximatorConfiguration
 import org.jetbrains.kotlin.utils.addToStdlib.applyIf
 
-fun <T> T.approximateDeclarationType(
+fun FirResolvedTypeRef.approximateDeclarationType(
     session: FirSession,
     containingCallableVisibility: Visibility?,
     isLocal: Boolean,
     isInlineFunction: Boolean = false,
     stripEnhancedNullability: Boolean = true
-): T {
-    if (this !is FirResolvedTypeRef) return this
+): FirResolvedTypeRef {
     val approximatedType = coneType.approximateDeclarationType(
         session, containingCallableVisibility, isLocal, isInlineFunction
     )
-    @Suppress("UNCHECKED_CAST")
-    return this.withReplacedConeType(approximatedType).applyIf(stripEnhancedNullability) { withoutEnhancedNullability() } as T
+    return this.withReplacedConeType(approximatedType).applyIf(stripEnhancedNullability) { withoutEnhancedNullability() }
 }
 
 fun ConeKotlinType.approximateDeclarationType(
