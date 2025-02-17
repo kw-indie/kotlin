@@ -586,7 +586,6 @@ private class CallInlining(
         val arguments = reference.getArgumentsWithIr().map { ParameterToArgument(it.first, it.second) }
         val evaluationStatements = mutableListOf<IrVariable>()
         arguments.forEach {
-            // Arguments may reference the previous ones - substitute them.
             val irExpression = it.argumentExpression
             val newArgument = if (it.isImmutableVariableLoad) {
                 irGetValueWithoutLocation((irExpression as IrGetValue).symbol)
@@ -677,7 +676,6 @@ private class CallInlining(
                 return@forEach
             }
 
-            // Arguments may reference the previous ones - substitute them.
             val variableInitializer = argument.argumentExpression
 
             // inline parameters should never be stored to temporaries, as it would prevent their inlining
