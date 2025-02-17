@@ -7,11 +7,11 @@
 
 package kotlin.metadata
 
+import org.jetbrains.kotlin.metadata.deserialization.Flags
+import kotlin.contracts.ExperimentalContracts
 import kotlin.metadata.internal.FlagImpl
 import kotlin.metadata.internal.extensions.*
 import kotlin.metadata.internal.propertyBooleanFlag
-import org.jetbrains.kotlin.metadata.deserialization.Flags
-import kotlin.contracts.ExperimentalContracts
 
 /**
  * Represents a Kotlin declaration container, such as a class or a package fragment.
@@ -252,7 +252,7 @@ public class KmFunction internal constructor(internal var flags: Int, public var
 /**
  * Represents a Kotlin property accessor.
  *
- * Does not contain meaningful information except attributes, such as visibility, modality and annotations.
+ * Contains only accessor annotations and attributes, such as visibility and modality.
  * Attributes can be read and written using extension properties, e.g. [KmPropertyAccessorAttributes.visibility] or [KmPropertyAccessorAttributes.isNotDefault].
  */
 public class KmPropertyAccessorAttributes internal constructor(internal var flags: Int) {
