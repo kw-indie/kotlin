@@ -978,13 +978,21 @@ abstract class FirDataFlowAnalyzer(
             return extensionReceiver ?: dispatchReceiver
         }
 
-        val receiver = when (this) {
-            is FirQualifiedAccessExpression -> firstReceiver()
-            is FirVariableAssignment -> (lValue as? FirQualifiedAccessExpression)?.firstReceiver()
-            else -> null
+        fun FirQualifiedAccessExpression.addContextArgumentsTo(target: MutableList<FirExpression?>) {
+            val candidate = candidate()
+            if (candidate != null) {
+                candidate.contextArguments?.forEach { target.add(it.expression) }
+            } else {
+                contextArguments.forEach { target.add(it) }
+            }
         }
 
         return buildList {
+            val receiver = when (this@orderedArguments) {
+                is FirQualifiedAccessExpression -> firstReceiver()
+                is FirVariableAssignment -> (lValue as? FirQualifiedAccessExpression)?.firstReceiver()
+                else -> null
+            }
             add(receiver)
 
             if (this@orderedArguments is FirFunctionCall) {
@@ -994,7 +1002,10 @@ abstract class FirDataFlowAnalyzer(
             }
 
             if (this@orderedArguments is FirQualifiedAccessExpression) {
-                contextArguments.forEach { add(it) }
+                addContextArgumentsTo(this)
+            } else if (this@orderedArguments is FirVariableAssignment) {
+                val lValue = lValue as? FirQualifiedAccessExpression
+                lValue?.addContextArgumentsTo(this)
             }
         }.toTypedArray()
     }
